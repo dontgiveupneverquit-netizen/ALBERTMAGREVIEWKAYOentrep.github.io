@@ -1,0 +1,909 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EntrepreViewer — Exam Reviewer</title>
+  <meta name="description" content="Entrepreneurship exam reviewer with clean, bold aesthetics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --bg-soft: #151924;
+      --ink: #f5f3ed;
+      --muted: #a7b0c0;
+      --accent: #ff5c5c;
+      --accent-2: #f2c14e;
+      --accent-3: #5dd9c1;
+      --line: #262c3a;
+      --card: #181e2a;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(1100px 500px at 15% 0%, rgba(93, 217, 193, 0.15), transparent 60%),
+        radial-gradient(900px 600px at 95% 10%, rgba(255, 92, 92, 0.12), transparent 60%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 17, 21, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      gap: 24px;
+    }
+
+    .logo {
+      font-family: "Fraunces", serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .cta {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #101217;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      border: none;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 90px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.6rem, 4vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--line);
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: var(--muted);
+    }
+
+    .hero-card {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow);
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.85rem;
+      margin-bottom: 18px;
+      color: var(--muted);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .metric strong {
+      font-size: 1.2rem;
+      display: block;
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .card-grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      min-height: 180px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .grid-split {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      align-items: center;
+      margin-top: 28px;
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .list-item span {
+      font-size: 1.1rem;
+      color: var(--accent-3);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 18px;
+      padding: 16px;
+      background: var(--bg-soft);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .timeline-item strong {
+      color: var(--accent-2);
+    }
+
+    .testimonial {
+      background: linear-gradient(140deg, rgba(255, 92, 92, 0.12), rgba(93, 217, 193, 0.08));
+      border-radius: 24px;
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .testimonial p {
+      font-size: 1.1rem;
+    }
+
+    .faq {
+      display: grid;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    details {
+      background: var(--card);
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .contact {
+      background: linear-gradient(120deg, rgba(242, 193, 78, 0.12), rgba(255, 92, 92, 0.1));
+      border-radius: 28px;
+      padding: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: grid;
+      gap: 18px;
+    }
+
+    .contact form {
+      display: grid;
+      gap: 12px;
+    }
+
+    input, textarea {
+      background: rgba(11, 13, 17, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .footer {
+      padding: 30px 0 50px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .taglist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .subsection {
+      margin-top: 26px;
+    }
+
+    .subsection h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .pill-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="logo">Entrepreneurship Reviewer</div>
+      <nav class="nav-links">
+        <a href="#lessons">Lessons</a>
+        <a href="#lesson-2">Lesson 2</a>
+        <a href="#lesson-3">Lesson 3</a>
+        <a href="#lesson-4">Lesson 4</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Entrepreneurship Exam Reviewer • 2026</div>
+          <h1>Review smarter. Answer faster. Pass your exam.</h1>
+          <p>
+            A focused reviewer for entrepreneurship. Clear definitions, key terms, and exam-friendly structure
+            built from your lessons.
+          </p>
+          <div class="hero-actions">
+            <a class="cta" href="#lesson-2">Start Lesson 2</a>
+            <a class="button-secondary" href="#lessons">See All Lessons</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2>Reviewer Snapshot</h2>
+          <p class="section-sub">One glance overview for last-minute studying.</p>
+          <div class="metrics">
+            <div class="metric">
+              <strong>3</strong>
+              <span class="section-sub">Lessons total</span>
+            </div>
+            <div class="metric">
+              <strong>7Ps + 4Ms</strong>
+              <span class="section-sub">Core frameworks</span>
+            </div>
+            <div class="metric">
+              <strong>15m</strong>
+              <span class="section-sub">Fast review run</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lessons">
+      <div class="container">
+        <h2 class="section-title">Lessons overview</h2>
+        <p class="section-sub">Jump to each lesson. All reviewer content is in Lessons 2 to 4.</p>
+        <div class="card-grid">
+          <div class="card reveal">
+            <h3>Lesson 2: Marketing Mix</h3>
+            <p>Meaning, purpose, origin, and the full 7Ps breakdown.</p>
+            <div class="taglist">
+              <span class="tag">Tools</span>
+              <span class="tag">Elements</span>
+              <span class="tag">Strategies</span>
+              <span class="tag">Promote</span>
+              <span class="tag">Sell</span>
+            </div>
+          </div>
+          <div class="card reveal">
+            <h3>Lesson 3: 4Ms of Operations</h3>
+            <p>Core resources for production, plus prototype, validation, and staffing topics.</p>
+            <div class="taglist">
+              <span class="tag">Resources</span>
+              <span class="tag">Operations</span>
+              <span class="tag">Production</span>
+              <span class="tag">Management</span>
+            </div>
+          </div>
+          <div class="card reveal">
+            <h3>Lesson 4: Revenue Forecasting</h3>
+            <p>Estimate income using price, volume, and time period assumptions.</p>
+            <div class="taglist">
+              <span class="tag">Estimate</span>
+              <span class="tag">Prediction</span>
+              <span class="tag">Income</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lesson-2">
+      <div class="container">
+        <div class="pill-label">Lesson 2</div>
+        <h2 class="section-title">Marketing Mix</h2>
+        <p class="section-sub">The set of tools or elements a business uses to promote and sell its product or service effectively.</p>
+
+        <div class="subsection">
+          <h3>Key words</h3>
+          <div class="taglist">
+            <span class="tag">Tools</span>
+            <span class="tag">Elements</span>
+            <span class="tag">Strategies</span>
+            <span class="tag">Promote</span>
+            <span class="tag">Sell</span>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Purpose / importance</h3>
+          <div class="two-col">
+            <div class="list-item reveal"><span>01</span><div>Decide what product to sell</div></div>
+            <div class="list-item reveal"><span>02</span><div>Decide how much to charge</div></div>
+            <div class="list-item reveal"><span>03</span><div>Decide where to sell</div></div>
+            <div class="list-item reveal"><span>04</span><div>Decide how to promote</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Simple meaning</h3>
+          <p class="section-sub">Marketing Mix = combination of strategies to meet customer needs and achieve business goals.</p>
+        </div>
+
+        <div class="subsection">
+          <h3>Origin of the marketing mix</h3>
+          <div class="timeline">
+            <div class="timeline-item reveal">
+              <strong>1960</strong>
+              <div>
+                <div>E. Jerome McCarthy introduced the 4Ps.</div>
+                <span class="section-sub">Product, Price, Place, Promotion.</span>
+              </div>
+            </div>
+            <div class="timeline-item reveal">
+              <strong>1981</strong>
+              <div>
+                <div>Booms and Bitner expanded it to 7Ps.</div>
+                <span class="section-sub">Added People, Process, Physical Evidence to address services and interaction.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>The 7Ps of Marketing Mix</h3>
+          <div class="card-grid">
+            <div class="card reveal">
+              <h3>1. Product</h3>
+              <p>Anything a business offers to satisfy customer needs or wants.</p>
+              <div class="mini-list">
+                <div>Goods (tangible): smartphones, shoes, bottled water, clothing.</div>
+                <div>Services (intangible): haircut, tutoring, food delivery, car repair.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>2. Price</h3>
+              <p>How much customers pay; affects value and quality perception.</p>
+              <div class="mini-list">
+                <div>Competitive, Penetration, Skimming, Value-Added, Psychological, Dynamic, Promotional, Cost-Plus.</div>
+                <div>Formula: Selling Price = Unit Cost + (Unit Cost x Markup Percentage).</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>3. Place</h3>
+              <p>How and where the product is made available.</p>
+              <div class="mini-list">
+                <div>Direct: Manufacturer to Consumer.</div>
+                <div>Indirect: Manufacturer to Wholesalers to Retailers to Consumers.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>4. Promotion</h3>
+              <p>How the business communicates value to customers.</p>
+              <div class="mini-list">
+                <div>Goals: awareness, interest, purchase, loyalty.</div>
+                <div>Examples: advertising, sales promos, direct marketing, personal selling.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>5. People</h3>
+              <p>All individuals who interact with customers or shape experience.</p>
+              <div class="mini-list">
+                <div>Employees, customer service, sales staff, business owner.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>6. Process</h3>
+              <p>Steps and procedures to deliver the product or service.</p>
+              <div class="mini-list">
+                <div>Order, payment, delivery, customer service processes.</div>
+                <div>Smooth process = satisfied customers.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>7. Physical Evidence</h3>
+              <p>Tangible proof that builds trust and shows quality.</p>
+              <div class="mini-list">
+                <div>Packaging, labels, store appearance, receipts.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Creating a brand name</h3>
+          <div class="card-grid">
+            <div class="card reveal"><h3>Simplicity</h3><p>Easy to spell and pronounce.</p></div>
+            <div class="card reveal"><h3>Relevance</h3><p>Reflects the product or business values.</p></div>
+            <div class="card reveal"><h3>Uniqueness</h3><p>Stands out from competitors.</p></div>
+            <div class="card reveal"><h3>Appeal</h3><p>Fits the target market preferences and culture.</p></div>
+            <div class="card reveal"><h3>Future flexibility</h3><p>Allows growth without rebranding.</p></div>
+            <div class="card reveal"><h3>Legal availability</h3><p>Avoid trademark or copyright issues.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lesson-3">
+      <div class="container">
+        <div class="pill-label">Lesson 3</div>
+        <h2 class="section-title">4Ms of Operations</h2>
+        <p class="section-sub">The essential resources needed to produce goods or deliver services.</p>
+
+        <div class="subsection">
+          <h3>Key words</h3>
+          <div class="taglist">
+            <span class="tag">Resources</span>
+            <span class="tag">Operations</span>
+            <span class="tag">Production</span>
+            <span class="tag">Management</span>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>The 4Ms</h3>
+          <div class="card-grid">
+            <div class="card reveal">
+              <h3>1. Manpower</h3>
+              <p>People involved in the business: employees, supervisors, and managers.</p>
+              <div class="mini-list">
+                <div>Includes: skills, qualifications, productivity.</div>
+                <div>Examples: cashiers, factory workers, teachers, cooks, delivery riders.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>2. Method</h3>
+              <p>Organized procedures and steps used to deliver products or services.</p>
+              <div class="mini-list">
+                <div>Ensures work is systematic and consistent.</div>
+                <div>Examples: cooking steps, service process, assembly flow.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>3. Machine</h3>
+              <p>Tools and equipment used in production or service delivery.</p>
+              <div class="mini-list">
+                <div>Examples: computers, ovens, printers, sewing machines, cash registers.</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>4. Materials</h3>
+              <p>Raw inputs and components needed to create the output.</p>
+              <div class="mini-list">
+                <div>Affect quality, cost, and usability.</div>
+                <div>Examples: ingredients, paper, fabric, office supplies.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Prototype</h3>
+          <div class="grid-split">
+            <div class="card reveal">
+              <h3>Meaning</h3>
+              <p>A preliminary model used for testing before mass production.</p>
+            </div>
+            <div class="card reveal">
+              <h3>Types</h3>
+              <div class="mini-list">
+                <div>Physical prototype: tangible model.</div>
+                <div>Digital prototype: virtual or simulated model.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Testing the prototype</h3>
+          <div class="card-grid">
+            <div class="card reveal"><h3>Internal testing</h3><p>Testing within the business.</p></div>
+            <div class="card reveal"><h3>User testing</h3><p>Testing by potential customers.</p></div>
+            <div class="card reveal"><h3>Pilot testing</h3><p>Small-scale real-world testing.</p></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Validation</h3>
+          <div class="grid-split">
+            <div class="card reveal">
+              <h3>Meaning</h3>
+              <p>Checks if a product is desirable, useful, and likely to be purchased.</p>
+            </div>
+            <div class="card reveal">
+              <h3>Purpose</h3>
+              <div class="mini-list">
+                <div>Meets customer needs.</div>
+                <div>Identifies strengths and weaknesses.</div>
+                <div>Reduces financial risk.</div>
+                <div>Guides improvement.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Methods of validation</h3>
+          <div class="card-grid">
+            <div class="card reveal"><h3>Surveys</h3><p>Use questionnaires to test demand.</p></div>
+            <div class="card reveal"><h3>Focus groups</h3><p>Discuss with target customers.</p></div>
+            <div class="card reveal"><h3>Product demos</h3><p>Sampling or live demos.</p></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Suppliers</h3>
+          <div class="grid-split">
+            <div class="card reveal">
+              <h3>Meaning</h3>
+              <p>Providers of materials, components, or services for production.</p>
+            </div>
+            <div class="card reveal">
+              <h3>Selection factors</h3>
+              <div class="mini-list">
+                <div>Quality.</div>
+                <div>Cost and payment terms.</div>
+                <div>Delivery reliability.</div>
+                <div>Reputation.</div>
+                <div>Capacity to meet demand.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Supply chain vs value chain</h3>
+          <div class="card-grid">
+            <div class="card reveal"><h3>Supply chain</h3><p>Steps from raw materials to finished product delivery.</p></div>
+            <div class="card reveal"><h3>Value chain</h3><p>Activities that add value and improve product quality.</p></div>
+            <div class="card reveal">
+              <h3>Parts of the supply chain</h3>
+              <p>Inbound logistics, operations/production, outbound logistics.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Manpower needs</h3>
+          <div class="grid-split">
+            <div class="card reveal">
+              <h3>Meaning</h3>
+              <p>Ensures enough workers with the right skills.</p>
+            </div>
+            <div class="card reveal">
+              <h3>Purpose</h3>
+              <div class="mini-list">
+                <div>Avoid overstaffing (high cost).</div>
+                <div>Avoid understaffing (low quality).</div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-list" style="margin-top: 12px;">
+            <div>Identify tasks and roles.</div>
+            <div>Determine number of employees.</div>
+            <div>Identify skills and qualifications.</div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Recruitment</h3>
+          <p class="section-sub">Process of finding, attracting, and hiring qualified personnel.</p>
+          <div class="card-grid">
+            <div class="card reveal"><h3>Advertise</h3><p>Post job openings.</p></div>
+            <div class="card reveal"><h3>Screen</h3><p>Review applications.</p></div>
+            <div class="card reveal"><h3>Interview</h3><p>Conduct interviews/tests.</p></div>
+            <div class="card reveal"><h3>Hire & train</h3><p>Onboard and train employees.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="testimonial reveal">
+          <p>Focus: memorize the 4Ms, prototype/testing types, and supplier selection factors.</p>
+          <span class="section-sub">Exam tip for Lesson 3</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="lesson-4">
+      <div class="container">
+        <div class="pill-label">Lesson 4</div>
+        <h2 class="section-title">Forecast the Revenue of the Business</h2>
+        <p class="section-sub">Revenue forecasting is the process of estimating how much money a business expects to earn within a specific period. It is a prediction, not an exact amount.</p>
+
+        <div class="subsection">
+          <h3>Key words</h3>
+          <div class="taglist">
+            <span class="tag">Estimate</span>
+            <span class="tag">Prediction</span>
+            <span class="tag">Income</span>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Factors affecting revenue</h3>
+          <div class="card-grid">
+            <div class="card reveal"><h3>Price</h3><p>Product or service price.</p></div>
+            <div class="card reveal"><h3>Sales volume</h3><p>Number of units sold.</p></div>
+            <div class="card reveal"><h3>Customer demand</h3><p>Preferences and buying behavior.</p></div>
+            <div class="card reveal"><h3>Marketing</h3><p>Promotion and visibility.</p></div>
+            <div class="card reveal"><h3>Competition</h3><p>Rivals in the market.</p></div>
+            <div class="card reveal"><h3>Location</h3><p>Where the business operates.</p></div>
+            <div class="card reveal"><h3>Seasonality</h3><p>Economic and seasonal changes.</p></div>
+            <div class="card reveal"><h3>Quality</h3><p>Product or service quality.</p></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Basic revenue formula</h3>
+          <div class="card reveal">
+            <p><strong>Revenue = Price x Quantity Sold</strong></p>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Simple assumptions used</h3>
+          <div class="two-col">
+            <div class="list-item reveal"><span>01</span><div>Selling price</div></div>
+            <div class="list-item reveal"><span>02</span><div>Expected units sold</div></div>
+            <div class="list-item reveal"><span>03</span><div>Time period (day, week, month)</div></div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3>Sample computation (standard format)</h3>
+          <div class="grid-split">
+            <div class="card reveal">
+              <h3>Assumptions</h3>
+              <div class="mini-list">
+                <div>Price per unit: ₱120</div>
+                <div>Units sold per day: 35</div>
+                <div>Days per week: 6</div>
+                <div>Weeks per month: 4</div>
+              </div>
+            </div>
+            <div class="card reveal">
+              <h3>Daily revenue</h3>
+              <p>₱120 x 35 = <strong>₱4,200</strong></p>
+              <h3 style="margin-top: 12px;">Weekly revenue</h3>
+              <p>₱4,200 x 6 = <strong>₱25,200</strong></p>
+              <h3 style="margin-top: 12px;">Monthly revenue</h3>
+              <p>₱25,200 x 4 = <strong>₱100,800</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="testimonial reveal">
+          <p>Focus: memorize the revenue formula and be ready to compute daily, weekly, and monthly figures.</p>
+          <span class="section-sub">Exam tip for Lesson 4</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>Reviewer ni Malaya</div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
